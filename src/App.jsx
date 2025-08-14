@@ -51,9 +51,9 @@ const App = () => {
     }
   };
 
-  const handleUpdatePet = async (formData, _id) => {
+  const handleUpdatePet = async (formData, petId) => {
     try {
-      const updatedPet = await petService.update(formData, _id);
+      const updatedPet = await petService.update(formData, petId);
 
       if (updatedPet.err) {
         throw new Error(updatedPet.err);
@@ -69,6 +69,24 @@ const App = () => {
     };
   };
 
+  const handleDeletePet = async (petId) => {
+    try {
+      const deletedPet = await petService.deletePet(petId);
+      if (deletedPet.err) {
+        throw new Error(deletedPet.err);
+      }
+      const updatedPetList = pets.filter((pet) => {
+        return pet._id !== deletedPet._id
+      })
+      setPets(updatedPetList);
+      setSelected(null);
+      setIsFormOpen(false);
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <>
       <PetList
@@ -79,7 +97,7 @@ const App = () => {
       />
       {isFormOpen ? (<PetForm handleAddPet={handleAddPet} selected={selected} handleUpdatePet={handleUpdatePet} />
       ) : (
-        <PetDetail selected={selected} handleFormView={handleFormView} />
+        <PetDetail selected={selected} handleFormView={handleFormView} handleDeletePet={handleDeletePet} />
       )}
 
     </>
