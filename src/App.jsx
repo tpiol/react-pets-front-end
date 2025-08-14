@@ -36,6 +36,19 @@ const App = () => {
     setIsFormOpen(!isFormOpen);
   };
 
+  const handleAddPet = async (formData) => {
+    try {
+      const newPet = await petService.create(formData);
+      if (newPet.err) {
+        throw new Error(newPet.err);
+      }
+      setPets([newPet, ...pets])
+      setIsFormOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <PetList
@@ -44,7 +57,7 @@ const App = () => {
         handleFormView={handleFormView}
         isFormOpen={isFormOpen}
       />
-      {isFormOpen ? (<PetForm />
+      {isFormOpen ? (<PetForm handleAddPet={handleAddPet} />
       ) : (
         <PetDetail selected={selected} />
       )}
