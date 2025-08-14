@@ -8,7 +8,12 @@ const PetList = (props) => {
                 ) : (
                     <ul>
                         {props.pets.map((pet) => (
-                            <li key={pet._id}>{pet.name}</li>
+                            <li key={pet._id}
+                            style={{ cursor: 'pointer', color: "#646CFF" }}
+                            onClick={() => props.handleSelect(pet)}
+                            >
+                                {pet.name}
+                                </li>
                         ))}
                     </ul>
                 )}
