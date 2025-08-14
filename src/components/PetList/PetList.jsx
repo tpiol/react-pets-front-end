@@ -9,15 +9,18 @@ const PetList = (props) => {
                     <ul>
                         {props.pets.map((pet) => (
                             <li key={pet._id}
-                            style={{ cursor: 'pointer', color: "#646CFF" }}
-                            onClick={() => props.handleSelect(pet)}
+                                style={{ cursor: 'pointer', color: "#646CFF" }}
+                                onClick={() => props.handleSelect(pet)}
                             >
                                 {pet.name}
-                                </li>
+                            </li>
                         ))}
                     </ul>
                 )}
             </div>
+            <button onClick={props.handleFormView}>
+                {props.isFormOpen ? "Close Form" : "New Pet"}
+            </button>
         </div>
     );
 }
